@@ -6,3 +6,5 @@ This will be a playground to getting started with GraphQL and learn a lot about 
 Some samples/tests have documentation, otherwise read the code.
 
 == How to execute Samples
+
+It just as simple as execute `gradle bootRun`
