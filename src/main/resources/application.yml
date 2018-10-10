@@ -1,0 +1,11 @@
+info:
+  app:
+    name: GraphQL Sample App
+    description: Application based on GraphQL to getting started
+    version: 1.0
+
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG
