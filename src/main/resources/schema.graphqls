@@ -1,0 +1,13 @@
+type Link {
+  url: String!
+  description: String!
+}
+
+type Link {
+  url: String!
+  description: String!
+}
+
+schema {
+  query: Query
+}
