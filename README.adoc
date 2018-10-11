@@ -3,7 +3,87 @@
 
 This will be a playground to getting started with GraphQL and learn a lot about it.
 
-Some samples/tests have documentation, otherwise read the code.
+_Note: Some samples/tests have documentation, otherwise read the code._
+
+== Short intro to GraphQL
+In plain words. GraphQL is an alternative to REST interface but with those advantages like to do several calls in the same request and returning just the data that client needs.
+
+It's and specification and it exists an implementation for Java.
+
+=== 1) Schema definition
+
+We have to create an `schema.graphqls` with the definition of API types: (types, properties)
+
+schema.graphqls
+[source, json]
+----
+type Book {
+    id: Long
+    title: String
+    author: Author
+}
+type Author {
+    id: Long
+    name: String
+}
+type Query {
+    books: [Book]!
+    authors: [Author]!
+    author(id: Long): Author!
+}
+type Mutation {
+    addBook(title: String, author: Long): Book
+}
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+----
+
+=== 2) Resolvers
+
+Once we have the `schema` defined, we have to develop the `resolvers` which will be the managers to get the Data (maybe from a DataBase following a repository pattern like this sample).
+
+ public class Query implements GraphQLQueryResolver
+
+=== 3) Mutators
+
+The `mutators` will be the responsible for processing the modification requests.
+
+ public class Mutation implements GraphQLMutationResolver
+
+=== 4) GraphQL on SpringBoot
+
+- We have to extend `GraphQLContext` to have the responsible who will redirect the requests.
+
+ public class AuthContext extends GraphQLContext
+
+- We have to inject to dependencies container all of these things through `@Bean` annotation method on Main class.
+
+Main.java
+[source, java]
+----
+@Bean
+public ServletRegistrationBean graphQLServletRegistrationBean(LibraryRepository libraryRepository) throws Exception {
+    GraphQLSchema schema = SchemaParser.newParser()
+            .schemaString(IOUtils.resourceToString("/library.graphqls", Charset.forName("UTF-8")))
+            .resolvers(new Query(libraryRepository), new Mutation(libraryRepository))
+            .build()
+            .makeExecutableSchema();
+
+    GraphQLContextBuilder contextBuilder = new GraphQLContextBuilder() {
+        @Override
+        public GraphQLContext build(Optional<HttpServletRequest> request, Optional<HttpServletResponse> response) {
+            String user = request.get().getHeader("User");
+            return new AuthContext(user, request, response);
+        }
+    };
+
+    return new ServletRegistrationBean(new SimpleGraphQLServlet(schema, new DefaultExecutionStrategyProvider(), null, null, null, null, contextBuilder, null), "/library");
+}
+
+----
 
 == How to execute Samples
 
