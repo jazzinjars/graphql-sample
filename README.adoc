@@ -87,4 +87,4 @@ public ServletRegistrationBean graphQLServletRegistrationBean(LibraryRepository 
 
 == How to execute Samples
 
-It just as simple as execute `gradle bootRun`
+It just as simple as execute `gradle bootRun` or `./gradlew run`. You will need Java9+ or Docker.
