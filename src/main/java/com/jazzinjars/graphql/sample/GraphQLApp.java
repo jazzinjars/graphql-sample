@@ -58,7 +58,6 @@ public class GraphQLApp {
 
     public static void main(String[] args) {
 	logger.info("==== RUNNING GRAPHQL SAMPLE APP ====");
-	//https://picodotdev.github.io/blog-bitix/2017/11/ejemplo-de-graphql-para-una-interfaz-de-un-servicio-con-spring-boot-y-java/
 	SpringApplication.run(GraphQLApp.class, args);
     }
 
