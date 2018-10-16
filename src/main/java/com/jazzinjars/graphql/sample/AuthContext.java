@@ -13,8 +13,7 @@ public class AuthContext extends GraphQLContext {
     private Optional<HttpServletResponse> response;
 
     public AuthContext(String user, Optional<HttpServletRequest> request, Optional<HttpServletResponse> response) {
-	super(request.get());
-	//super(request, response);
+	super(request, response);
 	this.user = user;
 	this.request = request;
 	this.response = response;

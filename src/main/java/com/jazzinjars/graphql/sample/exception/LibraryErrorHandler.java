@@ -1,6 +1,5 @@
 package com.jazzinjars.graphql.sample.exception;
 
-import com.jazzinjars.graphql.sample.GraphQLApp;
 import graphql.ExceptionWhileDataFetching;
 import graphql.GraphQLError;
 import graphql.servlet.GraphQLErrorHandler;

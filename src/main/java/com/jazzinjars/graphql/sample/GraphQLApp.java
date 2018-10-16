@@ -14,7 +14,7 @@ import graphql.schema.GraphQLScalarType;
 import graphql.schema.GraphQLSchema;
 import graphql.servlet.DefaultExecutionStrategyProvider;
 import graphql.servlet.GraphQLContextBuilder;
-import graphql.servlet.SimpleGraphQLHttpServlet;
+import graphql.servlet.SimpleGraphQLServlet;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -50,8 +50,8 @@ public class GraphQLApp {
 	LibraryErrorHandler errorHandler = new LibraryErrorHandler();
 	GraphQLContextBuilder contextBuilder = new LibraryContextBuilder();
 
-	return new ServletRegistrationBean(SimpleGraphQLHttpServlet.newBuilder(schema)
-//		.withExecutionStrategyProvider(new DefaultExecutionStrategyProvider(new AsyncExecutionStrategy()))
+	return new ServletRegistrationBean(SimpleGraphQLServlet.builder(schema)
+		.withExecutionStrategyProvider(new DefaultExecutionStrategyProvider(new AsyncExecutionStrategy()))
 		.withGraphQLErrorHandler(errorHandler)
 		.withGraphQLContextBuilder(contextBuilder).build(), "/schema");
     }
